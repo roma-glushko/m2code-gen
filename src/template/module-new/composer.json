@@ -1,0 +1,17 @@
+{
+  "name":"/",
+  "description":"",
+  "type":"magento2-module",
+
+  "require":{
+    "":"*"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "A\\B\\":""
+    }
+  }
+}
