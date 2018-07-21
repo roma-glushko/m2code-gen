@@ -1,0 +1,18 @@
+{
+    "name": "atwix/m2code-gen",
+    "description": "A CLI tool that helps to speed up development of typical Magento 2 code by generating templates. You just need to think about bussiness logic, routine will be reduced",
+    "type": "project",
+    "require": {
+        "symfony/console": "^4.1",
+        "symfony/yaml": "^4.1",
+        "symfony/filesystem": "^4.1",
+        "twig/twig": "^2.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roman Glushko",
+            "email": "r.glushko@atwix.com"
+        }
+    ]
+}
