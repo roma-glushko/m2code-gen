@@ -6,7 +6,9 @@
         "symfony/console": "^4.1",
         "symfony/yaml": "^4.1",
         "symfony/filesystem": "^4.1",
-        "twig/twig": "^2.0"
+        "twig/twig": "^2.0",
+        "symfony/dependency-injection": "^4.1",
+        "symfony/config": "^4.1"
     },
     "license": "MIT",
     "authors": [
@@ -14,5 +16,10 @@
             "name": "Roman Glushko",
             "email": "r.glushko@atwix.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Atwix\\": "Atwix"
+        }
+    }
 }
