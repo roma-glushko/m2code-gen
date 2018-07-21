@@ -1,0 +1,20 @@
+m2code_gen_app:
+    container_name: m2code_gen_app
+    image: busybox
+    volumes:
+        - ../:/var/www/html/:cached
+        - ../shared/.composer:/root/.composer/:delegated
+
+m2code_gen_server:
+    hostname: m2code-gen.test
+    container_name: m2code_gen_server
+    build: apache
+    volumes_from:
+        - m2code_gen_app
+    environment:
+        - DOCKER_FIX=
+        - VIRTUAL_HOST=m2code-gen.test
+        - ENABLE_SENDMAIL=true
+        - PHP_IDE_CONFIG="serverName=m2code-gen.test"
+    ports:
+        - 81:80
