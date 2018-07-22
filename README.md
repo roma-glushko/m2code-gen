@@ -9,7 +9,7 @@ You just need to think about bussiness logic, routine will be reduced.
 
 ### Theme
 
-* (comming) `theme:new` - add a new theme 
+* (coming) `theme:new` - add a new theme 
 
 ### Module
 
@@ -17,35 +17,35 @@ You just need to think about bussiness logic, routine will be reduced.
 
 ### API
 
-* (comming) `api:entity:new` - add ORM, service contracts, setup script for a new entity
+* (coming) `api:entity:new` - add ORM, service contracts, setup script for a new entity
 
 ### Frontend
 
-* (comming) `frontend:action:new` - add a new frontend action to the module
+* (coming) `frontend:action:new` - add a new frontend action to the module
 
-* (comming) `frontend:plugin:new` - add a new frontend plugin to the module
+* (coming) `frontend:plugin:new` - add a new frontend plugin to the module
 
 ### Adminhtml
 
 * `adminhtml:acl` - add ACL config to module
 
-* (comming) `frontend:action:new` - add a new backend action to the module
+* (coming) `frontend:action:new` - add a new backend action to the module
 
-* (comming) `frontend:plugin:new` - add a new backend plugin to the module
+* (coming) `frontend:plugin:new` - add a new backend plugin to the module
 
-* (comming) `adminhtml:widget:listing` - add a new UI component for listing
+* (coming) `adminhtml:widget:listing` - add a new UI component for listing
 
-* (comming) `adminhtml:widget:form` - add a new UI component for form
+* (coming) `adminhtml:widget:form` - add a new UI component for form
 
 ### Cronjob
 
-* (comming) `cronjob:new` - add a new cronjob to the module
+* (coming) `cronjob:new` - add a new cronjob to the module
 
 ### Setup Script
 
-* (comming) `setup:schema:install` - add an setup install script
+* (coming) `setup:schema:install` - add an setup install script
 
-* (comming) `setup:schema:upgrade` - add an setup upgrade script
+* (coming) `setup:schema:upgrade` - add an setup upgrade script
 
 ## Maintainers
 
