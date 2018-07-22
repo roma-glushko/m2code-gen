@@ -29,6 +29,7 @@ class ProcessVariablesService
             $result[$camelizedVarName] = $varValue;
         }
 
+        // todo: decouple
         $moduleFullName = $result['moduleFullName'];
         $result['moduleNamespace'] = str_replace('_', '\\', $moduleFullName);
         $result['vendorName'] = reset(explode('_', $moduleFullName, -1));

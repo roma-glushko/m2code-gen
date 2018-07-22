@@ -80,9 +80,13 @@ class GenerateNewModuleCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->varRegistry->set('module-full-name', $input->getArgument('module-name'));
+        $moduleName = $input->getArgument('module-name');
+
+        $this->varRegistry->set('module-full-name', $moduleName);
         $this->varRegistry->set('module-root-dir', $input->getArgument('module-root-dir'));
 
         $this->generateSnippetService->execute(static::SNIPPET_NAME, $this->varRegistry);
+
+        $output->writeln(sprintf('✅ <info>%s</info> module has been created', $moduleName));
     }
 }

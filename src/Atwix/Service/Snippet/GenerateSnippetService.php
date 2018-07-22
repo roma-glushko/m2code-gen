@@ -81,8 +81,8 @@ class GenerateSnippetService
 
         $snippetConfig = $this->snippetConfigLoader->load($snippetName);
 
-        $snippetTemplatePath = $snippetConfig['templatePath'] ?? null;
         $snippetFiles = $snippetConfig['files'] ?? [];
+        $snippetTemplatePath = $snippetConfig['templatePath'] ?? null;
 
         // validate generating snippet
         foreach ($snippetFiles as $snippetFilePath => $snippetFileConfig) {
