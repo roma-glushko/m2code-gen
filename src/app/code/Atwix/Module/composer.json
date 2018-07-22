@@ -1,8 +1,7 @@
 {
-  "name":"/",
-  "description":"",
+  "name":"atwix/module",
+  "description":"N/A",
   "type":"magento2-module",
-
   "require":{
     "":"*"
   },
@@ -11,7 +10,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "A\\B\\":""
+      "Atwix\\Module\\":""
     }
   }
 }

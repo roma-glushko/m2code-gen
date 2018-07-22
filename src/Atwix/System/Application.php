@@ -9,8 +9,10 @@ namespace Atwix\System;
 
 use Atwix\Command\GenerateNewModuleCommand;
 use Atwix\System\Filesystem\DirectoryLocator;
+use Atwix\System\Twig\TwigLoader;
 use Exception;
 use Symfony\Component\Console\Application as ConsoleApplication;
+use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -61,7 +63,7 @@ class Application
         $this->containerBuilder = $this->getDiContainer();
         $this->containerBuilder->setParameter('env.rootPath', $this->rootDir);
 
-        $this->registerSyntheticServices($this->containerBuilder);
+        $this->containerBuilder->compile();
 
         $this->consoleApplication = $this->getConsoleApplication();
         $this->consoleApplication->run();
@@ -80,27 +82,17 @@ class Application
     }
 
     /**
-     * @todo decouple
-     * @param ContainerBuilder $containerBuilder
-     *
-     * @return void
-     */
-    protected function registerSyntheticServices(ContainerBuilder $containerBuilder)
-    {
-        $twigLoader = new TwigLoader();
-        $templatePath = $this->directoryLocator->getTemplatePath();
-
-        $containerBuilder->register('twigRenderer', $twigLoader->load($templatePath));
-    }
-
-    /**
      * @return ConsoleApplication
      */
     protected function getConsoleApplication()
     {
         $consoleApplication = new ConsoleApplication(static::APP_NAME, static::APP_VERSION);
 
-        $consoleApplication->add(new GenerateNewModuleCommand());
+        $commandLoader = new ContainerCommandLoader($this->containerBuilder, [
+            'module:new' => GenerateNewModuleCommand::class,
+        ]);
+
+        $consoleApplication->setCommandLoader($commandLoader);
 
         return $consoleApplication;
     }

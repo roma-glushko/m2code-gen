@@ -7,7 +7,10 @@
 
 namespace Atwix\Command;
 
+use Atwix\Service\Snippet\GenerateSnippetService;
+use Atwix\System\VarRegistry;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -16,6 +19,39 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateNewModuleCommand extends Command
 {
+    const SNIPPET_NAME = 'module-new';
+
+    /**
+     * @var string
+     */
+    protected static $defaultName = 'module:new';
+
+    /**
+     * @var VarRegistry
+     */
+    protected $varRegistry;
+
+    /**
+     * @var GenerateSnippetService
+     */
+    protected $generateSnippetService;
+
+    /**
+     * @param GenerateSnippetService $generateSnippetService
+     * @param VarRegistry $varRegistry
+     * @param null|string $name
+     */
+    public function __construct(
+        GenerateSnippetService $generateSnippetService,
+        VarRegistry $varRegistry,
+        ?string $name = null
+    ) {
+        parent::__construct($name);
+
+        $this->varRegistry = $varRegistry;
+        $this->generateSnippetService = $generateSnippetService;
+    }
+
     /**
      * @inheritdoc
      */
@@ -23,6 +59,20 @@ class GenerateNewModuleCommand extends Command
     {
         $this->setName('module:new');
         $this->setDescription('Create a new Magento 2 module');
+
+        $this->addArgument(
+            'module-name',
+            InputArgument::REQUIRED,
+            'Module Name (Vendor_Module)'
+        );
+        $this->addArgument(
+            'module-root-dir',
+            InputArgument::OPTIONAL,
+            'Path to module directory',
+            'app/code'
+        );
+
+        $this->addUsage('module:new Atwix_OrderComment');
     }
 
     /**
@@ -30,6 +80,9 @@ class GenerateNewModuleCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        echo 'GenerateNewModuleCommand is running';
+        $this->varRegistry->set('module-full-name', $input->getArgument('module-name'));
+        $this->varRegistry->set('module-root-dir', $input->getArgument('module-root-dir'));
+
+        $this->generateSnippetService->execute(static::SNIPPET_NAME, $this->varRegistry);
     }
 }

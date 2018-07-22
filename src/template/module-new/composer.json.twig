@@ -1,0 +1,16 @@
+{
+  "name":"{{ vendorName|lower }}/{{ moduleName|lower }}",
+  "description":"N/A",
+  "type":"magento2-module",
+  "require":{
+    "":"*"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "{{ vendorName }}\\{{ moduleName }}\\":""
+    }
+  }
+}

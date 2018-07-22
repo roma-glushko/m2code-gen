@@ -42,6 +42,14 @@ class VarRegistry
     }
 
     /**
+     * @return array
+     */
+    public function getAll()
+    {
+        return $this->varRegistry;
+    }
+
+    /**
      * @param string $name
      * @param string $value
      *

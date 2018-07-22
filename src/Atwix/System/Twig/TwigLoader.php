@@ -5,7 +5,7 @@
  * @author Roman Glushko <https://github.com/roma-glushko>
  */
 
-namespace Atwix\System;
+namespace Atwix\System\Twig;
 
 use Twig_Environment;
 use Twig_Loader_Filesystem;

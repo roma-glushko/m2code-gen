@@ -5,7 +5,10 @@ templatePath: module-new
 files:
   'etc/module.xml':
     validator: ''
+    applier: 'applier.copyFile'
   'composer.json':
     validator: ''
+    applier: 'applier.copyFile'
   'registration.php':
     validator: ''
+    applier: 'applier.copyFile'

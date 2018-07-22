@@ -8,7 +8,6 @@
 namespace Atwix\System;
 
 use Atwix\System\Filesystem\DirectoryLocator;
-use Exception;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;

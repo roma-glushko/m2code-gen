@@ -26,26 +26,42 @@ class DirectoryLocator
     }
 
     /**
+     * @param string $path
+     *
      * @return string
      */
-    public function getRootPath(): string
+    public function getRootPath(string $path = ''): string
     {
-        return $this->rootPath;
+        return $this->rootPath . DIRECTORY_SEPARATOR . $path;
     }
 
     /**
+     * @param string $path
+     *
      * @return string
      */
-    public function getConfigPath(): string
+    public function getConfigPath(string $path = ''): string
     {
-        return $this->rootPath . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR;
+        return $this->getRootPath('config') . DIRECTORY_SEPARATOR . $path;
     }
 
     /**
+     * @param string $path
+     *
      * @return string
      */
-    public function getTemplatePath(): string
+    public function getSnippetConfigPath(string $path = ''): string
     {
-        return $this->rootPath . DIRECTORY_SEPARATOR . 'template' . DIRECTORY_SEPARATOR;
+        return $this->getConfigPath('snippet') . DIRECTORY_SEPARATOR . $path;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    public function getTemplatePath(string $path = ''): string
+    {
+        return $this->getRootPath('template') . DIRECTORY_SEPARATOR . $path;
     }
 }
