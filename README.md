@@ -29,9 +29,9 @@ You just need to think about bussiness logic, routine will be reduced.
 
 * `adminhtml:acl` - add ACL config to module
 
-* (coming) `frontend:action:new` - add a new backend action to the module
+* (coming) `adminhtml:action:new` - add a new backend action to the module
 
-* (coming) `frontend:plugin:new` - add a new backend plugin to the module
+* (coming) `adminhtml:plugin:new` - add a new backend plugin to the module
 
 * (coming) `adminhtml:widget:listing` - add a new UI component for listing
 
