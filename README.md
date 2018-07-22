@@ -17,7 +17,7 @@ You just need to think about bussiness logic, routine will be reduced.
 
 ### API
 
-* (coming) `api:entity:new` - add ORM, service contracts, setup script for a new entity
+* (coming) `api:contract:new` - add ORM, service contracts, setup script for a new entity
 
 ### Frontend
 
