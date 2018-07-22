@@ -1,6 +1,6 @@
 # m2code-gen 
 
-<img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License"> [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://github.com/roma-glushko/m2code-gen/edit/develop/README.md)
+<img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License">
 
 A CLI tool 🏗 that helps to speed up development of typical Magento 2 code by generating templates. 
 You just need to think about bussiness logic, routine will be reduced.
