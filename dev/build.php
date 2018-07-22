@@ -67,13 +67,19 @@ class BuildPhar
     }
 
     /**
+     * @return void
      *
+     * @todo remove unused files from archive (from vendor directory especially)
      */
     public function build()
     {
+        echo '🔨 Building m2code-gen.phar file..' . PHP_EOL;
+
         $this->cleanPrevBuilds();
 
         $this->getPharBuilder();
+
+        echo '🚀 m2code-gen.phar is ready to run' . PHP_EOL;
     }
 
     /**

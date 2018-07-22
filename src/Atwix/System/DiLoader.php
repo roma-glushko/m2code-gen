@@ -7,6 +7,7 @@
 
 namespace Atwix\System;
 
+use Atwix\System\Filesystem\DirectoryLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -17,15 +18,34 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 class DiLoader
 {
     /**
-     * @param string $configPath
+     * @var DirectoryLocator
+     */
+    protected $directoryLocator;
+
+    /**
+     * @var string
+     */
+    protected $configFileName;
+
+    /**
+     * @param DirectoryLocator $directoryLocator
+     */
+    public function __construct(
+        DirectoryLocator $directoryLocator
+    ) {
+        $this->directoryLocator = $directoryLocator;
+    }
+
+    /**
      * @param string $configFileName
      *
      * @return ContainerBuilder
-     * @throws \Exception
      */
-    public function load(string $configPath, string $configFileName)
+    public function load(string $configFileName): ContainerBuilder
     {
         $containerBuilder = new ContainerBuilder();
+        $configPath = $this->directoryLocator->getConfigPath();
+
         $loader = new YamlFileLoader($containerBuilder, new FileLocator($configPath));
 
         $loader->load($configFileName);
