@@ -7,6 +7,7 @@
 
 namespace Atwix\System;
 
+use Atwix\Command\GenerateAdminhtmlAclCommand;
 use Atwix\Command\GenerateNewModuleCommand;
 use Atwix\System\Filesystem\DirectoryLocator;
 use Atwix\System\Twig\TwigLoader;
@@ -90,6 +91,7 @@ class Application
 
         $commandLoader = new ContainerCommandLoader($this->containerBuilder, [
             'module:new' => GenerateNewModuleCommand::class,
+            'adminhtml:acl' => GenerateAdminhtmlAclCommand::class,
         ]);
 
         $consoleApplication->setCommandLoader($commandLoader);

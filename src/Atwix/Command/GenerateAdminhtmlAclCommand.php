@@ -15,16 +15,16 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class GenerateNewModuleCommand
+ * Class GenerateAdminhtmlAclCommand
  */
-class GenerateNewModuleCommand extends Command
+class GenerateAdminhtmlAclCommand extends Command
 {
-    const SNIPPET_NAME = 'module-new';
+    const SNIPPET_NAME = 'adminhtml-acl';
 
     /**
      * @var string
      */
-    protected static $defaultName = 'module:new';
+    protected static $defaultName = 'adminthml:acl';
 
     /**
      * @var VarRegistry
@@ -57,8 +57,8 @@ class GenerateNewModuleCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('module:new');
-        $this->setDescription('Create a new Magento 2 module');
+        $this->setName('adminhtml:acl');
+        $this->setDescription('Create a new ACL');
 
         $this->addArgument(
             'module-name',
@@ -72,7 +72,7 @@ class GenerateNewModuleCommand extends Command
             'app/code/'
         );
 
-        $this->addUsage('module:new Atwix_OrderComment');
+        $this->addUsage('adminhtml:acl Atwix_GoogleAnalytics');
     }
 
     /**
@@ -87,6 +87,6 @@ class GenerateNewModuleCommand extends Command
 
         $this->generateSnippetService->execute(static::SNIPPET_NAME, $this->varRegistry);
 
-        $output->writeln(sprintf('✅ <info>%s</info> module has been created', $moduleName));
+        $output->writeln(sprintf('✅ <info>ACL</info> has been created for %s module', $moduleName));
     }
 }
