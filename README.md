@@ -47,6 +47,10 @@ You just need to think about bussiness logic, routine will be reduced.
 
 * (coming) `setup:schema:upgrade` - add an setup upgrade script
 
+### Services
+
+* (coming) `service:category:get-listing` - add service that deal with category listing 
+
 ## Maintainers
 
 * Roman Glushko [@roma-glushko](https://github.com/roma-glushko) 
