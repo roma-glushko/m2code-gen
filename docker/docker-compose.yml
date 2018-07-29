@@ -3,7 +3,6 @@ m2code_gen_app:
     image: busybox
     volumes:
         - ../:/var/www/html/:cached
-        - ../shared/.composer:/root/.composer/:delegated
 
 m2code_gen_server:
     hostname: m2code-gen.test

@@ -20,5 +20,7 @@ services:
 
   applier.copyFile: '@Atwix\Applier\CopyFileApplier'
 
+  applier.mergeXml: '@Atwix\Applier\MergeXmlApplier'
+
   Symfony\Component\Filesystem\Filesystem: ~
 

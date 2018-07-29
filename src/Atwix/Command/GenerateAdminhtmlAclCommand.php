@@ -24,7 +24,7 @@ class GenerateAdminhtmlAclCommand extends Command
     /**
      * @var string
      */
-    protected static $defaultName = 'adminthml:acl';
+    protected static $defaultName = 'adminhtml:acl';
 
     /**
      * @var VarRegistry
@@ -57,7 +57,7 @@ class GenerateAdminhtmlAclCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('adminhtml:acl');
+        $this->setName(static::$defaultName);
         $this->setDescription('Create a new ACL');
 
         $this->addArgument(

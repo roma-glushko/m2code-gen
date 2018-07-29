@@ -8,9 +8,9 @@
 namespace Atwix\System;
 
 use Atwix\Command\GenerateAdminhtmlAclCommand;
+use Atwix\Command\GenerateNewFrontendPluginCommand;
 use Atwix\Command\GenerateNewModuleCommand;
 use Atwix\System\Filesystem\DirectoryLocator;
-use Atwix\System\Twig\TwigLoader;
 use Exception;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
@@ -92,6 +92,7 @@ class Application
         $commandLoader = new ContainerCommandLoader($this->containerBuilder, [
             'module:new' => GenerateNewModuleCommand::class,
             'adminhtml:acl' => GenerateAdminhtmlAclCommand::class,
+            'frontend:plugin:new' => GenerateNewFrontendPluginCommand::class,
         ]);
 
         $consoleApplication->setCommandLoader($commandLoader);

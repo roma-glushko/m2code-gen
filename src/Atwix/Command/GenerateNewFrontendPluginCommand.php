@@ -15,16 +15,16 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class GenerateNewModuleCommand
+ * Class GenerateNewFrontendPluginCommand
  */
-class GenerateNewModuleCommand extends Command
+class GenerateNewFrontendPluginCommand extends Command
 {
-    const SNIPPET_NAME = 'module-new';
+    const SNIPPET_NAME = 'frontend-plugin-new';
 
     /**
      * @var string
      */
-    protected static $defaultName = 'module:new';
+    protected static $defaultName = 'frontend:plugin:new';
 
     /**
      * @var VarRegistry
@@ -66,13 +66,30 @@ class GenerateNewModuleCommand extends Command
             'Module Name <info>(format: Vendor_Module)</info>'
         );
         $this->addArgument(
+            'type-class',
+            InputArgument::REQUIRED,
+            'Type Class that should be plugged in (e.g. Magento\Catalog\Api\ProductRepositoryInterface)'
+        );
+        $this->addArgument(
+            'domain',
+            InputArgument::REQUIRED,
+            'Domain that will be plugged in (e.g. Customer, Category, Product)'
+        );
+        $this->addArgument(
+            'plugin-class',
+            InputArgument::REQUIRED,
+            'Plugin Classname (e.g. LoadWebsiteToCustomEntityPlugin)'
+        );
+        $this->addArgument(
             'module-root-dir',
             InputArgument::OPTIONAL,
             'Path to module directory',
             'app/code/'
         );
 
-        $this->addUsage('module:new Atwix_OrderComment');
+        $this->addUsage(
+            'frontend:plugin:new Atwix_OrderSender Magento\Sales\Api\OrderRepositoryInterface Order SaveIsSentFlagPlugin'
+        );
     }
 
     /**
@@ -80,13 +97,16 @@ class GenerateNewModuleCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $moduleName = $input->getArgument('module-name');
+        $pluginClassName = $input->getArgument('plugin-class');
 
-        $this->varRegistry->set('module-full-name', $moduleName);
+        $this->varRegistry->set('module-full-name', $input->getArgument('module-name'));
         $this->varRegistry->set('module-root-dir', $input->getArgument('module-root-dir'));
+        $this->varRegistry->set('type-class', $input->getArgument('type-class'));
+        $this->varRegistry->set('domain', $input->getArgument('domain'));
+        $this->varRegistry->set('plugin-class', $pluginClassName);
 
         $this->generateSnippetService->execute(static::SNIPPET_NAME, $this->varRegistry);
 
-        $output->writeln(sprintf('✅ <info>%s</info> module has been created', $moduleName));
+        $output->writeln(sprintf('✅ <info>%s</info> plugin has been created', $pluginClassName));
     }
 }
