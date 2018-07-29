@@ -7,12 +7,11 @@
 
 namespace Atwix\Service\Template;
 
-use Atwix\Component\Renderer\Snippet\SnippetContentRenderer;
 use Atwix\Component\Renderer\Snippet\SnippetVariableProcessor;
-use Atwix\Service\Module\ResolveModulePathService;
 use Atwix\Service\Snippet\GenerateSnippetService;
 use Atwix\System\Config\Template\TemplateConfigLoader;
 use Atwix\System\VarRegistry;
+use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -28,17 +27,7 @@ class GenerateTemplateService
     /**
      * @var TemplateConfigLoader
      */
-    protected $snippetConfigLoader;
-
-    /**
-     * @var ResolveModulePathService
-     */
-    protected $resolveModulePathService;
-
-    /**
-     * @var SnippetContentRenderer
-     */
-    protected $snippetContentRenderer;
+    protected $templateConfigLoader;
 
     /**
      * @var SnippetVariableProcessor
@@ -52,17 +41,20 @@ class GenerateTemplateService
 
     /**
      * @param ContainerInterface $container
-     * @param TemplateConfigLoader $snippetConfigLoader
+     * @param TemplateConfigLoader $templateConfigLoader
+     * @param SnippetVariableProcessor $processVariablesService
      * @param GenerateSnippetService $generateSnippetService
      */
     public function __construct(
         ContainerInterface $container,
-        TemplateConfigLoader $snippetConfigLoader,
+        TemplateConfigLoader $templateConfigLoader,
+        SnippetVariableProcessor $processVariablesService,
         GenerateSnippetService $generateSnippetService
     ) {
-        $this->snippetConfigLoader = $snippetConfigLoader;
+        $this->templateConfigLoader = $templateConfigLoader;
         $this->container = $container;
         $this->generateSnippetService = $generateSnippetService;
+        $this->processVariablesService = $processVariablesService;
     }
 
     /**
@@ -70,21 +62,33 @@ class GenerateTemplateService
      * @param VarRegistry $variableRegistry
      *
      * @return void
+     * @throws Exception
      */
     public function execute(string $templateName, VarRegistry $variableRegistry)
     {
-        $snippetConfig = $this->snippetConfigLoader->load($templateName);
+        $templateConfigs = $this->templateConfigLoader->load();
 
-        $snippets = $snippetConfig['snippets'] ?? [];
-        $templatePath = $snippetConfig['templateName'] ?? null;
+        if (!array_key_exists($templateName, $templateConfigs)) {
+            throw new Exception(sprintf('"%s" template is not found', $templateName));
+        }
 
-        // validate generating snippet
+        $templateConfig = $templateConfigs[$templateName];
+
+        $snippets = $templateConfig['snippets'] ?? [];
+        $variables = $this->processVariablesService->execute($variableRegistry);
+
+        // todo: validate generating snippet
         //foreach ($snippetFiles as $snippetFilePath => $snippetFileConfig) {
         //}
 
         // apply snippet
-        foreach ($snippets as $snippetFilePath => $snippetFileConfig) {
-            // $this->generateSnippetService->execute();
+        foreach ($snippets as $snippetPath => $snippetConfig) {
+            $this->generateSnippetService->execute(
+                $templateConfig,
+                $snippetPath,
+                $snippetConfig,
+                $variables
+            );
         }
     }
 }

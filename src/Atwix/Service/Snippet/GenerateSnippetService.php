@@ -7,10 +7,10 @@
 
 namespace Atwix\Service\Snippet;
 
-use Atwix\Applier\ApplierInterface;
+use Atwix\Component\Applier\ApplierInterface;
+use Atwix\Component\Magento\Filesystem\MagentoDirectoryLocator;
 use Atwix\Component\Renderer\Snippet\SnippetContentRenderer;
-use Atwix\Service\Module\ResolveModulePathService;
-use Atwix\Component\Renderer\Snippet\SnippetVariableProcessor;
+use Atwix\Component\Renderer\Snippet\SnippetPathRenderer;
 use Atwix\System\Config\Template\TemplateConfigLoader;
 use Atwix\System\VarRegistry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -31,73 +31,80 @@ class GenerateSnippetService
     protected $snippetConfigLoader;
 
     /**
-     * @var ResolveModulePathService
-     */
-    protected $resolveModulePathService;
-
-    /**
      * @var SnippetContentRenderer
      */
     protected $snippetContentRenderer;
 
     /**
-     * @var SnippetVariableProcessor
+     * @var MagentoDirectoryLocator
      */
-    protected $processVariablesService;
+    protected $magentoDirectoryLocator;
+
+    /**
+     * @var VarRegistry
+     */
+    protected $varRegistry;
+
+    /**
+     * @var SnippetPathRenderer
+     */
+    protected $snippetPathRenderer;
 
     /**
      * @param ContainerInterface $container
-     * @param ResolveModulePathService $resolveModulePathService
      * @param SnippetContentRenderer $snippetContentRenderer
-     * @param SnippetVariableProcessor $processVariablesService
+     * @param SnippetPathRenderer $snippetPathRenderer
+     * @param MagentoDirectoryLocator $magentoDirectoryLocator
+     * @param VarRegistry $varRegistry
      */
     public function __construct(
         ContainerInterface $container,
-        //ResolveModulePathService $resolveModulePathService,
         SnippetContentRenderer $snippetContentRenderer,
-        SnippetVariableProcessor $processVariablesService
+        SnippetPathRenderer $snippetPathRenderer,
+        MagentoDirectoryLocator $magentoDirectoryLocator,
+        VarRegistry $varRegistry
     ) {
-        //$this->resolveModulePathService = $resolveModulePathService;
         $this->container = $container;
         $this->snippetContentRenderer = $snippetContentRenderer;
-        $this->processVariablesService = $processVariablesService;
+        $this->magentoDirectoryLocator = $magentoDirectoryLocator;
+        $this->snippetPathRenderer = $snippetPathRenderer;
+        $this->varRegistry = $varRegistry;
     }
 
     /**
-     * @param string $snippetName
-     * @param VarRegistry $variableRegistry
+     * @param array $templateConfig
+     * @param string $snippetPath
+     * @param array $snippetConfig
+     * @param array $variables
      *
      * @return void
      */
-    public function execute(string $snippetName, VarRegistry $variableRegistry)
-    {
-        $moduleName = $variableRegistry->get('module-full-name');
-        $moduleRootDir = $variableRegistry->get('module-root-dir');
+    public function execute(
+        array $templateConfig,
+        string $snippetPath,
+        array $snippetConfig,
+        array $variables
+    ) {
+        /** @var ApplierInterface $applier */
+        $applier = $this->container->get($snippetConfig['applier']);
 
-        $modulePath = $this->resolveModulePathService->execute($moduleName, $moduleRootDir);
-        $variables = $this->processVariablesService->execute($variableRegistry);
+        $templateName = $templateConfig['templateName'];
+        $templateSnippetDir = sprintf('%s/snippets', $templateName);
 
-        $snippetConfig = $this->snippetConfigLoader->load($snippetName);
+        $moduleName = $this->varRegistry->get('module-full-name');
+        $moduleRootDir = $this->varRegistry->get('module-root-dir');
 
-        $snippetFiles = $snippetConfig['files'] ?? [];
-        $snippetTemplatePath = $snippetConfig['templatePath'] ?? null;
+        $modulePath = $this->magentoDirectoryLocator->getModuleDirectory($moduleName, $moduleRootDir);
 
-        // validate generating snippet
-        //foreach ($snippetFiles as $snippetFilePath => $snippetFileConfig) {
-        //}
+        $snippetFilePath = sprintf('%s/%s.twig', $templateSnippetDir, $snippetPath);
 
-        // apply snippet
-        foreach ($snippetFiles as $snippetFilePath => $snippetFileConfig) {
-            /** @var ApplierInterface $applier */
-            $applier = $this->container->get($snippetFileConfig['applier']);
-            $snippetFileTemplatePath = sprintf('%s/%s.twig', $snippetTemplatePath, $snippetFilePath);
+        $renderedSnippetContent = $this->snippetContentRenderer->render(
+            $snippetFilePath,
+            $variables
+        );
 
-            $renderedSnippetContent = $this->snippetContentRenderer->render(
-                $snippetFileTemplatePath,
-                $variables
-            );
+        $filePath = $this->snippetPathRenderer->render($snippetPath, $variables);
 
-            $applier->apply($modulePath, $snippetTemplatePath, $snippetFilePath, $renderedSnippetContent);
-        }
+        $applier->apply($modulePath, $filePath, $renderedSnippetContent);
     }
 }

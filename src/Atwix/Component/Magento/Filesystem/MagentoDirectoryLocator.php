@@ -8,6 +8,9 @@
 
 namespace Atwix\Component\Magento\Filesystem;
 
+/**
+ * Class MagentoDirectoryLocator
+ */
 class MagentoDirectoryLocator
 {
     /**
@@ -21,6 +24,9 @@ class MagentoDirectoryLocator
     }
 
     /**
+     * @param string $moduleName
+     * @param string $codePath
+     *
      * @return string
      */
     public function getModuleDirectory(string $moduleName, string $codePath = 'app/code/'): string

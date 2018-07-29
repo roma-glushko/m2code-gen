@@ -7,8 +7,8 @@
 
 namespace Atwix\System\Config\Template;
 
+use Atwix\System\Filesystem\TemplateLocator;
 use Symfony\Component\Config\FileLocator as ConfigFileLocator;
-use Atwix\System\Filesystem\DirectoryLocator;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -16,31 +16,47 @@ use Symfony\Component\Yaml\Yaml;
  */
 class TemplateConfigLoader
 {
-    /**
-     * @var DirectoryLocator
-     */
-    protected $directoryLocator;
+    const TEMPLATE_CONFIG_FILE = 'template.yaml';
 
     /**
-     * @param DirectoryLocator $directoryLocator
+     * @var TemplateLocator
      */
-    public function __construct(DirectoryLocator $directoryLocator)
+    protected $templateLocator;
+
+    /**
+     * @param TemplateLocator $templateLocator
+     */
+    public function __construct(TemplateLocator $templateLocator)
     {
-        $this->directoryLocator = $directoryLocator;
+        $this->templateLocator = $templateLocator;
     }
 
     /**
-     * @param string $snippetConfigName
-     *
-     * @return array
+     * @return string[]
      */
-    public function load(string $snippetConfigName)
+    public function load()
     {
-        $configDirectories = [
-            $this->directoryLocator->getTemplatePath(),
-        ];
+        $configDirectories = $this->templateLocator->getTemplateDirectoryList();
 
         $fileLocator = new ConfigFileLocator($configDirectories);
-        $yamlUserFiles = $fileLocator->locate('template.yaml', null, false);
+        $templateFiles = $fileLocator->locate(static::TEMPLATE_CONFIG_FILE, null, false);
+
+        $mergedTemplateConfig = [];
+
+        foreach ($templateFiles as $templateFile) {
+            $mergedTemplateConfig = array_merge($mergedTemplateConfig, $this->getTemplateConfig($templateFile));
+        }
+
+        return $mergedTemplateConfig;
+    }
+
+    /**
+     * @param string $templateFile
+     *
+     * @return string[]
+     */
+    protected function getTemplateConfig(string $templateFile)
+    {
+        return Yaml::parseFile($templateFile);
     }
 }

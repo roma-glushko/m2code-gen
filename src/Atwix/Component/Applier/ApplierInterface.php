@@ -14,15 +14,13 @@ interface ApplierInterface
 {
     /**
      * @param string $modulePath
-     * @param string $snippetPath
-     * @param string $snippetFilePath
+     * @param string $filePath
      * @param string $renderedSnippetFileContent
      * @return
      */
     public function apply(
         string $modulePath,
-        string $snippetPath,
-        string $snippetFilePath,
+        string $filePath,
         string $renderedSnippetFileContent
     );
 }

@@ -1,11 +1,12 @@
 # This file is part of m2code-gen <https://github.com/roma-glushko/m2code-gen>
 # @author Roman Glushko <https://github.com/roma-glushko>
 
-templateName: module-new
-snippets:
-  'etc/module.xml':
-    applier: 'applier.copyFile'
-  'composer.json':
-    applier: 'applier.copyFile'
-  'registration.php':
-    applier: 'applier.copyFile'
+module-new:
+  templateName: 'module-new'
+  snippets:
+    'etc/module.xml':
+      applier: 'applier.copyFile'
+    'composer.json':
+      applier: 'applier.copyFile'
+    'registration.php':
+      applier: 'applier.copyFile'

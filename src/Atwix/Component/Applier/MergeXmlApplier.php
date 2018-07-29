@@ -39,19 +39,17 @@ class MergeXmlApplier implements ApplierInterface
 
     /**
      * @param string $modulePath
-     * @param string $snippetPath
-     * @param string $snippetFilePath
+     * @param string $filePath
      * @param string $renderedSnippetFileContent
      *
      * @return void
      */
     public function apply(
         string $modulePath,
-        string $snippetPath,
-        string $snippetFilePath,
+        string $filePath,
         string $renderedSnippetFileContent
     ) {
-        $moduleFilePath = $modulePath . DIRECTORY_SEPARATOR . $snippetFilePath;
+        $moduleFilePath = $modulePath . DIRECTORY_SEPARATOR . $filePath;
 
         if (!$this->filesystem->exists($moduleFilePath)) {
             // if there is nothing to merge
