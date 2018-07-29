@@ -5,14 +5,14 @@
  * @author Roman Glushko <https://github.com/roma-glushko>
  */
 
-namespace Atwix\Service\Snippet;
+namespace Atwix\Component\Renderer\Snippet;
 
 use Atwix\System\VarRegistry;
 
 /**
  * Class ProcessVariablesService
  */
-class ProcessVariablesService
+class SnippetVariableProcessor
 {
     /**
      * @param VarRegistry $variableRegistry

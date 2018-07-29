@@ -5,19 +5,16 @@
  * @author Roman Glushko <https://github.com/roma-glushko>
  */
 
-namespace Atwix\System\Snippet;
+namespace Atwix\System\Config\Template;
 
+use Symfony\Component\Config\FileLocator as ConfigFileLocator;
 use Atwix\System\Filesystem\DirectoryLocator;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Loader\LoaderResolver;
-use Symfony\Component\Config\Loader\DelegatingLoader;
-use Symfony\Component\Config\Loader\FileLoader;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Class SnippetConfigLoader
+ * Class TemplateConfigLoader
  */
-class SnippetConfigLoader
+class TemplateConfigLoader
 {
     /**
      * @var DirectoryLocator
@@ -39,9 +36,11 @@ class SnippetConfigLoader
      */
     public function load(string $snippetConfigName)
     {
-        $snippetConfigFileName = sprintf('%s.yaml', $snippetConfigName);
-        $snippetConfigPath = $this->directoryLocator->getSnippetConfigPath($snippetConfigFileName);
+        $configDirectories = [
+            $this->directoryLocator->getTemplatePath(),
+        ];
 
-        return Yaml::parseFile($snippetConfigPath);
+        $fileLocator = new ConfigFileLocator($configDirectories);
+        $yamlUserFiles = $fileLocator->locate('template.yaml', null, false);
     }
 }

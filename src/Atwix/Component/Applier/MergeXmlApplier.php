@@ -5,11 +5,9 @@
  * @author Roman Glushko <https://github.com/roma-glushko>
  */
 
-namespace Atwix\Applier;
+namespace Atwix\Component\Applier;
 
-use Atwix\System\Magento\Config\XmlConfigMerger;
-use DOMDocument;
-use SimpleXMLElement;
+use Atwix\Component\Magento\Config\XmlConfigMerger;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -17,11 +15,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class MergeXmlApplier implements ApplierInterface
 {
-    /**
-     * Prefix which will be used for root namespace
-     */
-    const ROOT_NAMESPACE_PREFIX = 'x';
-
     /**
      * @var Filesystem
      */

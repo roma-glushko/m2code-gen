@@ -8,14 +8,15 @@
 namespace Atwix\Service\Snippet;
 
 use Atwix\Applier\ApplierInterface;
-use Atwix\Processor\Snippet\TwigSnippetFileProcessor;
+use Atwix\Component\Renderer\Snippet\SnippetContentRenderer;
 use Atwix\Service\Module\ResolveModulePathService;
-use Atwix\System\Snippet\SnippetConfigLoader;
+use Atwix\Component\Renderer\Snippet\SnippetVariableProcessor;
+use Atwix\System\Config\Template\TemplateConfigLoader;
 use Atwix\System\VarRegistry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class GenerateSnippetService
+ * Class GenerateTemplateService
  */
 class GenerateSnippetService
 {
@@ -25,7 +26,7 @@ class GenerateSnippetService
     protected $container;
 
     /**
-     * @var SnippetConfigLoader
+     * @var TemplateConfigLoader
      */
     protected $snippetConfigLoader;
 
@@ -35,33 +36,30 @@ class GenerateSnippetService
     protected $resolveModulePathService;
 
     /**
-     * @var TwigSnippetFileProcessor
+     * @var SnippetContentRenderer
      */
-    protected $twigSnippetFileProcessor;
+    protected $snippetContentRenderer;
 
     /**
-     * @var ProcessVariablesService
+     * @var SnippetVariableProcessor
      */
     protected $processVariablesService;
 
     /**
      * @param ContainerInterface $container
-     * @param SnippetConfigLoader $snippetConfigLoader
      * @param ResolveModulePathService $resolveModulePathService
-     * @param TwigSnippetFileProcessor $twigSnippetFileProcessor
-     * @param ProcessVariablesService $processVariablesService
+     * @param SnippetContentRenderer $snippetContentRenderer
+     * @param SnippetVariableProcessor $processVariablesService
      */
     public function __construct(
         ContainerInterface $container,
-        SnippetConfigLoader $snippetConfigLoader,
-        ResolveModulePathService $resolveModulePathService,
-        TwigSnippetFileProcessor $twigSnippetFileProcessor,
-        ProcessVariablesService $processVariablesService
+        //ResolveModulePathService $resolveModulePathService,
+        SnippetContentRenderer $snippetContentRenderer,
+        SnippetVariableProcessor $processVariablesService
     ) {
-        $this->snippetConfigLoader = $snippetConfigLoader;
-        $this->resolveModulePathService = $resolveModulePathService;
+        //$this->resolveModulePathService = $resolveModulePathService;
         $this->container = $container;
-        $this->twigSnippetFileProcessor = $twigSnippetFileProcessor;
+        $this->snippetContentRenderer = $snippetContentRenderer;
         $this->processVariablesService = $processVariablesService;
     }
 
@@ -85,9 +83,8 @@ class GenerateSnippetService
         $snippetTemplatePath = $snippetConfig['templatePath'] ?? null;
 
         // validate generating snippet
-        foreach ($snippetFiles as $snippetFilePath => $snippetFileConfig) {
-
-        }
+        //foreach ($snippetFiles as $snippetFilePath => $snippetFileConfig) {
+        //}
 
         // apply snippet
         foreach ($snippetFiles as $snippetFilePath => $snippetFileConfig) {
@@ -95,12 +92,12 @@ class GenerateSnippetService
             $applier = $this->container->get($snippetFileConfig['applier']);
             $snippetFileTemplatePath = sprintf('%s/%s.twig', $snippetTemplatePath, $snippetFilePath);
 
-            $renderedSnippetFileContent = $this->twigSnippetFileProcessor->process(
+            $renderedSnippetContent = $this->snippetContentRenderer->render(
                 $snippetFileTemplatePath,
                 $variables
             );
 
-            $applier->apply($modulePath, $snippetTemplatePath, $snippetFilePath, $renderedSnippetFileContent);
+            $applier->apply($modulePath, $snippetTemplatePath, $snippetFilePath, $renderedSnippetContent);
         }
     }
 }

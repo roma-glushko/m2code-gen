@@ -7,7 +7,7 @@
 
 namespace Atwix\Command;
 
-use Atwix\Service\Snippet\GenerateSnippetService;
+use Atwix\Service\Template\GenerateTemplateService;
 use Atwix\System\VarRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -32,24 +32,24 @@ class GenerateNewFrontendPluginCommand extends Command
     protected $varRegistry;
 
     /**
-     * @var GenerateSnippetService
+     * @var GenerateTemplateService
      */
-    protected $generateSnippetService;
+    protected $generateTemplateService;
 
     /**
-     * @param GenerateSnippetService $generateSnippetService
+     * @param GenerateTemplateService $generateTemplateService
      * @param VarRegistry $varRegistry
      * @param null|string $name
      */
     public function __construct(
-        GenerateSnippetService $generateSnippetService,
+        GenerateTemplateService $generateTemplateService,
         VarRegistry $varRegistry,
         ?string $name = null
     ) {
         parent::__construct($name);
 
         $this->varRegistry = $varRegistry;
-        $this->generateSnippetService = $generateSnippetService;
+        $this->generateTemplateService = $generateTemplateService;
     }
 
     /**
@@ -105,7 +105,7 @@ class GenerateNewFrontendPluginCommand extends Command
         $this->varRegistry->set('domain', $input->getArgument('domain'));
         $this->varRegistry->set('plugin-class', $pluginClassName);
 
-        $this->generateSnippetService->execute(static::SNIPPET_NAME, $this->varRegistry);
+        $this->generateTemplateService->execute(static::SNIPPET_NAME, $this->varRegistry);
 
         $output->writeln(sprintf('✅ <info>%s</info> plugin has been created', $pluginClassName));
     }

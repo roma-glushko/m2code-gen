@@ -5,7 +5,7 @@
  * @author Roman Glushko <https://github.com/roma-glushko>
  */
 
-namespace Atwix\Applier;
+namespace Atwix\Component\Applier;
 
 use Symfony\Component\Filesystem\Filesystem;
 

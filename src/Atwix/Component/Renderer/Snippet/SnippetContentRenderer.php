@@ -5,14 +5,14 @@
  * @author Roman Glushko <https://github.com/roma-glushko>
  */
 
-namespace Atwix\Processor\Snippet;
+namespace Atwix\Component\Renderer\Snippet;
 
 use Atwix\System\Twig\TwigEnvironmentWrapper;
 
 /**
- * Class TwigSnippetFileProcessor
+ * Class SnippetContentRenderer
  */
-class TwigSnippetFileProcessor
+class SnippetContentRenderer
 {
     /**
      * @var TwigEnvironmentWrapper
@@ -28,13 +28,13 @@ class TwigSnippetFileProcessor
     }
 
     /**
-     * @param string $snippetFileTemplatePath
+     * @param string $snippetTemplateFilePath
      * @param array $variables
      *
      * @return string
      */
-    public function process(string $snippetFileTemplatePath, array $variables): string
+    public function render(string $snippetTemplateFilePath, array $variables): string
     {
-        return $this->twigEnvironment->render($snippetFileTemplatePath, $variables);
+        return $this->twigEnvironment->render($snippetTemplateFilePath, $variables);
     }
 }

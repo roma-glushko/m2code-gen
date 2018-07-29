@@ -5,7 +5,7 @@
  * @author Roman Glushko <https://github.com/roma-glushko>
  */
 
-namespace Atwix\System\Magento\Config;
+namespace Atwix\Component\Magento\Config;
 
 use DOMDocument;
 use DOMElement;

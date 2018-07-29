@@ -5,7 +5,7 @@
  * @author Roman Glushko <https://github.com/roma-glushko>
  */
 
-namespace Atwix\Data;
+namespace Atwix\Component\Data;
 
 /**
  * Class ValidationResultData

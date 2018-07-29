@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Atwix\System\Magento\Config;
+namespace Atwix\Component\Magento\Config;
 
 /**
  * Matching of XPath expressions to path patterns

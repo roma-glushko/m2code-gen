@@ -5,7 +5,7 @@
  * @author Roman Glushko <https://github.com/roma-glushko>
  */
 
-namespace Atwix\Validator\Snippet;
+namespace Atwix\Component\Validator\Snippet;
 
 use Atwix\Data\ValidationResultData;
 

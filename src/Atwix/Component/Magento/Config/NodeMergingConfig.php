@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Atwix\System\Magento\Config;
+namespace Atwix\Component\Magento\Config;
 
 /**
  * Configuration of identifier attributes to be taken into account during merging

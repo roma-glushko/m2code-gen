@@ -10,6 +10,7 @@ namespace Atwix\System\Twig;
 use Atwix\System\Filesystem\DirectoryLocator;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
+use Twig_Template;
 
 /**
  * Class TwigEnvironmentWrapper
@@ -52,5 +53,15 @@ class TwigEnvironmentWrapper
     public function render($name, array $context = [])
     {
         return $this->twigEnvironment->render($name, $context);
+    }
+
+    /**
+     * @param string $templateContent
+     *
+     * @return Twig_Template
+     */
+    public function createTemplate($templateContent)
+    {
+        return $this->twigEnvironment->createTemplate($templateContent);
     }
 }

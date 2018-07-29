@@ -18,9 +18,9 @@ services:
   Atwix\System\Filesystem\DirectoryLocator:
     arguments: ['%env.rootPath%']
 
-  applier.copyFile: '@Atwix\Applier\CopyFileApplier'
+  applier.copyFile: '@Atwix\Component\Applier\CopyFileApplier'
 
-  applier.mergeXml: '@Atwix\Applier\MergeXmlApplier'
+  applier.mergeXml: '@Atwix\Component\Applier\MergeXmlApplier'
 
   Symfony\Component\Filesystem\Filesystem: ~
 
